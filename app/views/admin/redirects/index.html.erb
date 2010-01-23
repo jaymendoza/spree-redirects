@@ -13,10 +13,10 @@
 
 <table class="index">
   <thead>
-    <th><%= order_by_link :from, :text => t('redirects_from') %></th>
+    <th><%= order @search, :by => :from, :as => t('redirects_from') %></th>
     <th><%= t('redirects_to') %></th>
-    <th><%= order_by_link :status, :text => t('redirect_status') %></th>
-    <th><%= order_by_link({:target => :type}, :text => t('redirect_target')) %></th>
+    <th><%= order @search, :by => :status, :as => t('redirect_status') %></th>
+    <th><%= order @search, :target => :type, :as => t('redirect_target') %></th>
     <th><%= t('action') %></th>
   </thead>
   <tbody>
@@ -37,4 +37,4 @@
   </tbody>
 </table>
 
-<%= page_links(:prev => "&#171; #{t('previous')}", :next => "#{t('next')} &#187;") if @search.page_count > 1 %>
+<%= will_paginate(:prev => "&#171; #{t('previous')}", :next => "#{t('next')} &#187;") %>
