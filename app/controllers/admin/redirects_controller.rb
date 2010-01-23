@@ -38,12 +38,14 @@ class Admin::RedirectsController < Admin::BaseController
   
   #Thanks to Admin::UsersController in spree-core for initial code
   def collection   
-    @search = Redirect.new_search(params[:search])
+    @search = Redirect.search(params[:search])
+
     #set order by to default or form result
-    @search.order_by ||= :updated_at
-    @search.order_as ||= "DESC"
+    @search.order ||= "descend_by_updated_at"
+
     #set results per page to default or form result
-    @search.per_page ||= Spree::Config[:admin_products_per_page]
-    @collection, @collection_count = @search.all, @search.count
+    @collection_count = @search.count
+    @collection = @search.paginate(:per_page => Spree::Config[:admin_products_per_page],
+                                   :page     => params[:page])
   end
 end
